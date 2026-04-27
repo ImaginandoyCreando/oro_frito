@@ -29,12 +29,9 @@
 
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
+    pointer-events: none; z-index: 1000; opacity: 0.4;
   }
 
   /* NAV */
@@ -52,14 +49,36 @@
     text-decoration: none; font-family: 'Lato', sans-serif;
     font-weight: 700; font-size: 0.72rem; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--text); transition: color 0.2s;
+    cursor: pointer; background: none; border: none;
   }
-  nav ul a:hover { color: var(--gold); }
+  nav ul a:hover, nav ul button:hover { color: var(--gold); }
   .nav-cta {
     background: var(--gold); color: white !important;
     padding: 0.5rem 1.3rem; border-radius: 2px;
     transition: background 0.2s !important;
   }
   .nav-cta:hover { background: var(--gold-dark) !important; color: white !important; }
+
+  /* CART NAV BUTTON */
+  .nav-cart {
+    position: relative;
+    background: none; border: none; cursor: pointer;
+    color: var(--text); padding: 0.4rem;
+    display: flex; align-items: center; gap: 0.4rem;
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .nav-cart svg { width: 20px; height: 20px; fill: currentColor; }
+  .cart-badge {
+    position: absolute; top: -4px; right: -8px;
+    background: var(--gold); color: white;
+    border-radius: 50%; min-width: 20px; height: 20px;
+    font-size: 0.65rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 5px;
+    transform: scale(0); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .cart-badge.has-items { transform: scale(1); }
 
   /* HERO */
   .hero {
@@ -78,7 +97,13 @@
   .hero-eyebrow::before {
     content: ''; display: block; width: 40px; height: 1px; background: var(--gold);
   }
-  .hero-logo { width: 280px; margin-bottom: 2rem; }
+  .hero-logo { width: 220px; margin-bottom: 1.5rem; }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.8rem; font-weight: 900;
+    color: var(--espresso); line-height: 1; margin-bottom: 1rem;
+  }
+  .hero-title span { color: var(--gold); font-style: italic; font-weight: 400; }
   .hero-tagline {
     font-family: 'Cormorant Garamond', serif; font-size: 1.45rem;
     font-style: italic; color: var(--text-light); line-height: 1.7;
@@ -96,6 +121,7 @@
     font-weight: 700; font-size: 0.75rem; letter-spacing: 0.15em;
     text-transform: uppercase; border-radius: 2px; transition: all 0.3s;
     box-shadow: 0 4px 20px rgba(201,168,76,0.35);
+    border: none; cursor: pointer;
   }
   .btn-primary:hover {
     background: var(--gold-dark); transform: translateY(-2px);
@@ -108,6 +134,7 @@
     font-weight: 700; font-size: 0.75rem; letter-spacing: 0.15em;
     text-transform: uppercase; border-radius: 2px;
     border: 1.5px solid var(--gold); transition: all 0.3s;
+    cursor: pointer;
   }
   .btn-secondary:hover { background: var(--gold); color: white; }
 
@@ -135,13 +162,12 @@
     max-width: 200px;
   }
 
-  /* ABOUT — REDISEÑADO */
+  /* ABOUT */
   .about-strip {
     background: linear-gradient(180deg, var(--espresso) 0%, #120A03 100%);
     color: var(--cream);
     padding: 6rem 6rem 7rem;
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
   .about-strip::before {
     content: ''; position: absolute; top: 0; left: 50%;
@@ -157,8 +183,7 @@
   }
   .about-intro {
     text-align: center; max-width: 780px;
-    margin: 0 auto 4.5rem;
-    position: relative; z-index: 2;
+    margin: 0 auto 4.5rem; position: relative; z-index: 2;
   }
   .about-intro .eyebrow {
     font-family: 'Lato', sans-serif; font-size: 0.68rem;
@@ -166,8 +191,7 @@
     margin-bottom: 1.2rem;
     display: flex; align-items: center; justify-content: center; gap: 1.2rem;
   }
-  .about-intro .eyebrow::before,
-  .about-intro .eyebrow::after {
+  .about-intro .eyebrow::before, .about-intro .eyebrow::after {
     content: ''; display: block; width: 50px; height: 1px; background: var(--gold);
   }
   .about-intro h2 {
@@ -188,8 +212,7 @@
     border: 1px solid rgba(201,168,76,0.25);
     padding: 2.2rem 1.5rem 2rem;
     border-radius: 8px;
-    text-align: center;
-    position: relative; overflow: hidden;
+    text-align: center; position: relative; overflow: hidden;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .about-card::before {
@@ -216,8 +239,7 @@
     transition: transform 0.4s ease;
   }
   .about-card:hover .icon-wrap {
-    transform: scale(1.08) rotate(-4deg);
-    border-color: var(--gold);
+    transform: scale(1.08) rotate(-4deg); border-color: var(--gold);
   }
   .about-card .icon { font-size: 2rem; line-height: 1; }
   .about-card h4 {
@@ -228,8 +250,7 @@
   .about-card .card-divider {
     width: 30px; height: 1px;
     background: var(--gold);
-    margin: 0 auto 0.9rem;
-    opacity: 0.6;
+    margin: 0 auto 0.9rem; opacity: 0.6;
   }
   .about-card p {
     font-size: 0.9rem; color: rgba(245,239,224,0.7);
@@ -245,8 +266,7 @@
     margin-bottom: 1rem;
     display: flex; align-items: center; justify-content: center; gap: 1.2rem;
   }
-  .section-header .eyebrow::before,
-  .section-header .eyebrow::after {
+  .section-header .eyebrow::before, .section-header .eyebrow::after {
     content: ''; display: block; width: 40px; height: 1px; background: var(--gold);
   }
   .section-header h2 {
@@ -292,14 +312,17 @@
     font-size: 0.85rem; font-family: 'Lato', sans-serif;
     color: var(--text-light); font-weight: 400;
   }
-  .order-btn {
+  .add-btn {
     background: var(--espresso); color: var(--gold-light);
-    text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 2px;
+    border: none; cursor: pointer;
+    padding: 0.65rem 1.2rem; border-radius: 2px;
     font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
     text-transform: uppercase; transition: all 0.2s;
     display: flex; align-items: center; gap: 0.4rem;
+    font-family: 'Lato', sans-serif;
   }
-  .order-btn:hover { background: var(--gold); color: white; }
+  .add-btn:hover { background: var(--gold); color: white; }
+  .add-btn svg { width: 14px; height: 14px; fill: currentColor; }
 
   /* COMBO */
   .combo-section { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
@@ -382,10 +405,10 @@
     background: #25D366; color: white; text-decoration: none;
     padding: 1.1rem 2.4rem; border-radius: 3px;
     font-family: 'Lato', sans-serif; font-weight: 700;
-    font-size: 1rem; letter-spacing: 0.05em;
-    transition: all 0.3s;
+    font-size: 1rem; letter-spacing: 0.05em; transition: all 0.3s;
     box-shadow: 0 4px 20px rgba(37,211,102,0.35);
     animation: pulse-green 2.5s infinite;
+    border: none; cursor: pointer;
   }
   @keyframes pulse-green {
     0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.35); }
@@ -436,7 +459,7 @@
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 6px 25px rgba(37,211,102,0.5); text-decoration: none;
     animation: float-bob 3s ease-in-out infinite, pulse-green 2.5s infinite;
-    transition: transform 0.2s;
+    transition: transform 0.2s; border: none; cursor: pointer;
   }
   .float-wa:hover { transform: scale(1.1); }
   @keyframes float-bob {
@@ -444,6 +467,188 @@
     50% { transform: translateY(-6px); }
   }
   .float-wa svg { width: 32px; height: 32px; fill: white; }
+
+  /* ============== CARRITO ============== */
+  .cart-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,18,8,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1500;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .cart-panel {
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: 100%; max-width: 460px;
+    background: var(--cream);
+    z-index: 1600;
+    display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -10px 0 40px rgba(0,0,0,0.2);
+  }
+  .cart-panel.open { transform: translateX(0); }
+
+  .cart-header {
+    padding: 1.5rem 1.8rem;
+    background: var(--espresso); color: var(--cream);
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+  .cart-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; color: var(--gold-light);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .cart-header h3 svg { width: 22px; height: 22px; fill: var(--gold-light); }
+  .cart-close {
+    background: none; border: none; cursor: pointer;
+    color: var(--cream); font-size: 1.8rem; line-height: 1;
+    padding: 0; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; transition: background 0.2s;
+  }
+  .cart-close:hover { background: rgba(255,255,255,0.1); }
+
+  .cart-body {
+    flex: 1; overflow-y: auto;
+    padding: 1.5rem 1.8rem;
+  }
+  .cart-empty {
+    text-align: center; padding: 3rem 1rem;
+    color: var(--text-light);
+  }
+  .cart-empty .empty-icon {
+    font-size: 4rem; margin-bottom: 1rem; opacity: 0.4;
+  }
+  .cart-empty p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-style: italic;
+  }
+
+  .cart-item {
+    display: flex; gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    align-items: center;
+  }
+  .cart-item:last-child { border-bottom: none; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; color: var(--espresso);
+    margin-bottom: 0.2rem;
+  }
+  .cart-item-price {
+    font-size: 0.85rem; color: var(--gold-dark); font-weight: 700;
+  }
+  .qty-controls {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: white; border-radius: 4px;
+    padding: 0.2rem; border: 1px solid rgba(201,168,76,0.3);
+  }
+  .qty-btn {
+    width: 26px; height: 26px;
+    background: var(--cream-dark); border: none;
+    border-radius: 3px; cursor: pointer;
+    font-weight: 700; color: var(--espresso);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .qty-btn:hover { background: var(--gold); color: white; }
+  .qty-value {
+    min-width: 24px; text-align: center;
+    font-weight: 700; color: var(--espresso); font-size: 0.9rem;
+  }
+  .remove-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--text-light); font-size: 1.2rem;
+    padding: 0.3rem; transition: color 0.2s;
+  }
+  .remove-btn:hover { color: #c0392b; }
+
+  .cart-form {
+    padding: 1.5rem 1.8rem;
+    background: white;
+    border-top: 1px solid rgba(201,168,76,0.3);
+  }
+  .cart-total {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px dashed rgba(201,168,76,0.4);
+  }
+  .cart-total-label {
+    font-family: 'Lato', sans-serif; font-size: 0.75rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-light); font-weight: 700;
+  }
+  .cart-total-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; color: var(--gold-dark);
+  }
+  .form-group { margin-bottom: 0.9rem; }
+  .form-group label {
+    display: block;
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 700;
+    color: var(--text-light); margin-bottom: 0.35rem;
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 3px;
+    font-family: 'Lato', sans-serif; font-size: 0.95rem;
+    color: var(--text); background: var(--cream);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+  }
+  .send-order-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+    background: #25D366; color: white;
+    border: none; cursor: pointer;
+    padding: 1rem 1.5rem; border-radius: 3px;
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    font-size: 0.85rem; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    transition: all 0.3s;
+    box-shadow: 0 4px 18px rgba(37,211,102,0.35);
+  }
+  .send-order-btn:hover {
+    background: #128C7E; transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37,211,102,0.5);
+  }
+  .send-order-btn:disabled {
+    background: #999; cursor: not-allowed;
+    transform: none; box-shadow: none;
+  }
+  .send-order-btn svg { width: 20px; height: 20px; fill: white; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    background: var(--espresso); color: var(--gold-light);
+    padding: 0.9rem 1.6rem; border-radius: 4px;
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    font-size: 0.85rem; letter-spacing: 0.05em;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    border: 1px solid rgba(201,168,76,0.5);
+    z-index: 2000;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast::before { content: '✓'; color: #4ade80; font-size: 1.1rem; font-weight: 900; }
 
   /* ANIMATIONS */
   .fade-up {
@@ -458,7 +663,8 @@
     .hero-right { height: 50vw; max-height: 400px; }
     .hero-right::after { width: 0; }
     .hero-left { padding: 4rem 2rem 3rem; }
-    .hero-logo { width: 200px; }
+    .hero-logo { width: 160px; }
+    .hero-title { font-size: 2.6rem; }
     .about-strip { padding: 4rem 1.5rem 5rem; }
     .about-intro h2 { font-size: 2.2rem; }
     .about-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
@@ -468,7 +674,10 @@
     .combo-section { grid-template-columns: 1fr; }
     .gallery { grid-template-columns: repeat(2, 1fr); height: 500px; }
     footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem; }
-    nav ul { display: none; }
+    nav ul { gap: 1.2rem; }
+    nav ul li:not(.nav-cart-li):not(.nav-cta-li) { display: none; }
+    nav { padding: 0.8rem 1rem; }
+    .cart-panel { max-width: 100%; }
   }
 </style>
 </head>
@@ -476,12 +685,19 @@
 
 <!-- NAV -->
 <nav>
-  <img src="logo.png" alt="Oro Frito" class="nav-logo">
+  <img src="logo%20oro%20.png" alt="Oro Frito" class="nav-logo">
   <ul>
     <li><a href="#menu">Menú</a></li>
     <li><a href="#combos">Combos</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
-    <li><a href="https://wa.me/50764564832?text=Hola!%20Quiero%20hacer%20un%20pedido%20🫓" target="_blank" class="nav-cta">Pedir Ahora</a></li>
+    <li class="nav-cart-li">
+      <button class="nav-cart" onclick="openCart()" aria-label="Ver carrito">
+        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        Carrito
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+    </li>
+    <li class="nav-cta-li"><a onclick="openCart()" class="nav-cta">Pedir Ahora</a></li>
   </ul>
 </nav>
 
@@ -496,21 +712,19 @@
 <section class="hero">
   <div class="hero-left fade-up">
     <div class="hero-eyebrow">Panamá · Fritas al momento</div>
-    <img src="logo.png" alt="Oro Frito" class="hero-logo">
+    <img src="logo%20oro%20.png" alt="Oro Frito" class="hero-logo">
+    <h1 class="hero-title">Oro <span>Frito</span></h1>
     <p class="hero-tagline">
       <em>Si está frito, está dorado.</em><br>
       <strong>Si está dorado, está bueno.</strong>
     </p>
     <div class="hero-actions">
-      <a href="https://wa.me/50764564832?text=Hola!%20Quiero%20hacer%20un%20pedido%20🫓" target="_blank" class="btn-primary">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Hacer Pedido
-      </a>
+      <button onclick="openCart()" class="btn-primary">Hacer Pedido</button>
       <a href="#menu" class="btn-secondary">Ver Menú</a>
     </div>
   </div>
   <div class="hero-right">
-    <img src="hero.jpg" alt="Empanadas Oro Frito">
+    <img src="guia%201.jpeg" alt="Empanadas Oro Frito">
   </div>
 </section>
 
@@ -534,21 +748,18 @@
       <div class="card-divider"></div>
       <p>Preparada diariamente, con la textura crujiente que nos distingue.</p>
     </div>
-
     <div class="about-card fade-up">
       <div class="icon-wrap"><div class="icon">🔥</div></div>
       <h4>Fritas al momento</h4>
       <div class="card-divider"></div>
       <p>Sin reposo: de la sartén a tu bandeja, crocantes y calientes.</p>
     </div>
-
     <div class="about-card fade-up">
       <div class="icon-wrap"><div class="icon">🫙</div></div>
       <h4>Salsas artesanales</h4>
       <div class="card-divider"></div>
       <p>Hogao casero y salsa blanca de la casa, hechas con receta propia.</p>
     </div>
-
     <div class="about-card fade-up">
       <div class="icon-wrap"><div class="icon">📍</div></div>
       <h4>Panamá</h4>
@@ -568,30 +779,32 @@
   <div class="menu-grid">
     <!-- Empanada -->
     <div class="menu-card fade-up">
-      <img src="empanada.jpg" alt="Empanada de Maíz">
+      <img src="guia%202.jpeg" alt="Empanada de Maíz">
       <div class="menu-card-body">
         <h3>Empanada de Maíz</h3>
         <p>Crujiente por fuera, jugosa por dentro. Relleno de carne o queso, acompañadas de hogao y salsa de la casa.</p>
         <div class="menu-card-footer">
           <div class="price">$1 <span>/ unidad</span></div>
-          <a href="https://wa.me/50764564832?text=Hola!%20Quiero%20pedir%20empanadas%20🫓" target="_blank" class="order-btn">
-            Pedir →
-          </a>
+          <button class="add-btn" onclick="addToCart('Empanada de Maíz', 1.00)">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Agregar
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Arepa de huevo -->
     <div class="menu-card fade-up">
-      <img src="arepa e huevo.jpeg" alt="Arepa de Huevo">
+      <img src="arepa%20e%20huevo.jpeg" alt="Arepa de Huevo">
       <div class="menu-card-body">
         <h3>Arepa de Huevo</h3>
         <p>La reina del Caribe. Arepa de maíz frita con huevo dentro — una experiencia única en cada mordida.</p>
         <div class="menu-card-footer">
           <div class="price">$1.50 <span>/ unidad</span></div>
-          <a href="https://wa.me/50764564832?text=Hola!%20Quiero%20pedir%20arepas%20de%20huevo%20🥚" target="_blank" class="order-btn">
-            Pedir →
-          </a>
+          <button class="add-btn" onclick="addToCart('Arepa de Huevo', 1.50)">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Agregar
+          </button>
         </div>
       </div>
     </div>
@@ -604,9 +817,10 @@
         <p>Coca-Cola o Canadá Dry, bien frías. El complemento perfecto para tus empanadas doradas.</p>
         <div class="menu-card-footer">
           <div class="price">$1 <span>/ lata</span></div>
-          <a href="https://wa.me/50764564832?text=Hola!%20Quiero%20pedir%20una%20soda%20🥤" target="_blank" class="order-btn">
-            Pedir →
-          </a>
+          <button class="add-btn" onclick="addToCart('Soda', 1.00)">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Agregar
+          </button>
         </div>
       </div>
     </div>
@@ -625,7 +839,7 @@
         <p>Ocho mini empanadas doradas recién fritas más una soda fría a tu elección. Ideal para compartir (o no 😄).</p>
         <div class="combo-price-row">
           <div class="combo-price"><sub>$</sub>5</div>
-          <a href="https://wa.me/50764564832?text=Hola!%20Quiero%20el%20combo%20de%208%20mini%20empanadas%20+%201%20soda%20🫓🥤" target="_blank" class="btn-primary">Pedir Combo →</a>
+          <button class="btn-primary" onclick="addToCart('Combo 8 Mini Empanadas + 1 Soda', 5.00)">Agregar al Carrito →</button>
         </div>
       </div>
       <div class="combo-card fade-up">
@@ -634,7 +848,7 @@
         <p>Seis empanadas generosas rellenas de queso derretido, perfectamente doradas y acompañadas de nuestras salsas.</p>
         <div class="combo-price-row">
           <div class="combo-price"><sub>$</sub>5</div>
-          <a href="https://wa.me/50764564832?text=Hola!%20Quiero%20el%20combo%20de%206%20empanadas%20de%20queso%20🧀" target="_blank" class="btn-primary">Pedir Combo →</a>
+          <button class="btn-primary" onclick="addToCart('Combo 6 Empanadas de Queso', 5.00)">Agregar al Carrito →</button>
         </div>
       </div>
     </div>
@@ -643,10 +857,10 @@
 
 <!-- GALLERY -->
 <div class="gallery">
-  <div class="gallery-item"><img src="galeria-1.jpg" alt="Oro Frito"></div>
-  <div class="gallery-item"><img src="galeria-2.jpg" alt="Oro Frito"></div>
-  <div class="gallery-item"><img src="galeria-3.jpg" alt="Oro Frito"></div>
-  <div class="gallery-item"><img src="galeria-4.jpg" alt="Oro Frito"></div>
+  <div class="gallery-item"><img src="guia%203.jpeg" alt="Oro Frito"></div>
+  <div class="gallery-item"><img src="guia%204.jpeg" alt="Oro Frito"></div>
+  <div class="gallery-item"><img src="guia%205.jpeg" alt="Oro Frito"></div>
+  <div class="gallery-item"><img src="guia%206.jpeg" alt="Oro Frito"></div>
 </div>
 
 <!-- CTA -->
@@ -654,62 +868,111 @@
   <div class="cta-left fade-up">
     <h2>Pide ahora<br>por WhatsApp</h2>
     <p>Recibe tu pedido caliente, dorado y listo en minutos. Atendemos directo por WhatsApp para hacerlo más fácil.</p>
-    <a href="https://wa.me/50764564832?text=Hola!%20Quiero%20hacer%20un%20pedido%20🫓" target="_blank" class="whatsapp-btn">
+    <button onclick="openCart()" class="whatsapp-btn">
       <svg class="whatsapp-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Escríbenos por WhatsApp
-    </a>
+      Hacer Pedido Ahora
+    </button>
   </div>
   <div class="cta-right fade-up">
     <div class="info-row">
       <div class="info-icon">📍</div>
-      <div class="info-text">
-        <h4>Ubicación</h4>
-        <p>Panamá</p>
-      </div>
+      <div class="info-text"><h4>Ubicación</h4><p>Panamá</p></div>
     </div>
     <div class="info-row">
       <div class="info-icon">📞</div>
-      <div class="info-text">
-        <h4>Teléfono</h4>
-        <p>+507 6456 4832</p>
-      </div>
+      <div class="info-text"><h4>Teléfono</h4><p>+507 6456 4832</p></div>
     </div>
     <div class="info-row">
       <div class="info-icon">🕒</div>
-      <div class="info-text">
-        <h4>Horario</h4>
-        <p>Todos los días · 7:00 am – 9:00 pm</p>
-      </div>
+      <div class="info-text"><h4>Horario</h4><p>Todos los días · 7:00 am – 9:00 pm</p></div>
     </div>
     <div class="info-row">
       <div class="info-icon">💛</div>
-      <div class="info-text">
-        <h4>Pago</h4>
-        <p>Efectivo · Yappy · Transferencia</p>
-      </div>
+      <div class="info-text"><h4>Pago</h4><p>Efectivo · Yappy · Transferencia</p></div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <img src="logo.png" alt="Oro Frito">
+  <img src="logo%20oro%20.png" alt="Oro Frito">
   <p>© 2026 Oro Frito · Si está dorado, está bueno.</p>
   <a href="https://wa.me/50764564832" target="_blank" class="social">WhatsApp</a>
 </footer>
 
+<!-- ============== CARRITO ============== -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<aside class="cart-panel" id="cartPanel" aria-label="Carrito de pedido">
+  <div class="cart-header">
+    <h3>
+      <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+      Tu pedido
+    </h3>
+    <button class="cart-close" onclick="closeCart()" aria-label="Cerrar">×</button>
+  </div>
+
+  <div class="cart-body" id="cartBody">
+    <!-- Items injected by JS -->
+  </div>
+
+  <form class="cart-form" id="cartForm" onsubmit="sendOrder(event)">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-value" id="cartTotal">$0.00</span>
+    </div>
+    <div class="form-group">
+      <label for="customerName">Nombre completo *</label>
+      <input type="text" id="customerName" required placeholder="Tu nombre">
+    </div>
+    <div class="form-group">
+      <label for="customerPhone">Teléfono *</label>
+      <input type="tel" id="customerPhone" required placeholder="6XXX-XXXX">
+    </div>
+    <div class="form-group">
+      <label for="paymentMethod">Método de pago *</label>
+      <select id="paymentMethod" required>
+        <option value="">Seleccionar...</option>
+        <option value="Efectivo">Efectivo</option>
+        <option value="Yappy">Yappy</option>
+        <option value="Transferencia">Transferencia bancaria</option>
+      </select>
+    </div>
+    <button type="submit" class="send-order-btn" id="sendOrderBtn" disabled>
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar pedido por WhatsApp
+    </button>
+  </form>
+</aside>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Agregado al carrito</div>
+
 <script>
-  // Fade-up animation on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.15 });
+  // ============ CARRITO ============
+  const WHATSAPP_NUMBER = '50764564832';
+  let cart = [];
 
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-</script>
+  function addToCart(name, price) {
+    const existing = cart.find(item => item.name === name);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push({ name, price, qty: 1 });
+    }
+    renderCart();
+    showToast(`${name} agregado`);
+    // Auto-open cart on first add
+    if (cart.length === 1 && cart[0].qty === 1) {
+      setTimeout(openCart, 600);
+    }
+  }
 
-</body>
-</html>
+  function changeQty(name, delta) {
+    const item = cart.find(i => i.name === name);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+    renderCart(); **...**
+
+_This response is too long to display in full._
