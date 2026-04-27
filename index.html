@@ -954,6 +954,85 @@
       for (var j = 0; j < cart.length; j++) {
         var item = cart[j];
         var safeName = escapeHtml(item.name);
-        var jsName = item.name.replace(/\\/g, '\\\\').replace(/ **...**
+               var jsName = item.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        html += '<div class="cart-item">' +
+          '<div class="cart-item-info">' +
+            '<div class="cart-item-name">' + safeName + '</div>' +
+            '<div class="cart-item-price">$' + item.price.toFixed(2) + ' c/u · Subtotal: $' + (item.price * item.qty).toFixed(2) + '</div>' +
+          '</div>' +
+          '<div class="qty-controls">' +
+            '<button type="button" class="qty-btn" onclick="changeQty(\'' + jsName + '\', -1)">−</button>' +
+            '<span class="qty-value">' + item.qty + '</span>' +
+            '<button type="button" class="qty-btn" onclick="changeQty(\'' + jsName + '\', 1)">+</button>' +
+          '</div>' +
+          '<button type="button" class="remove-btn" onclick="removeItem(\'' + jsName + '\')" title="Quitar">×</button>' +
+        '</div>';
+      }
+      body.innerHTML = html;
+      sendBtn.disabled = false;
+    }
+    totalEl.textContent = '$' + totalPrice.toFixed(2);
+  }
 
-_This response is too long to display in full._
+  function openCart() {
+    document.getElementById('cartOverlay').classList.add('open');
+    document.getElementById('cartPanel').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCart() {
+    document.getElementById('cartOverlay').classList.remove('open');
+    document.getElementById('cartPanel').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function showToast(message) {
+    var toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.remove('show');
+    void toast.offsetWidth;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  }
+
+  function sendOrder(event) {
+    event.preventDefault();
+    if (cart.length === 0) { showToast('Tu carrito está vacío'); return; }
+
+    var name = document.getElementById('customerName').value.trim();
+    var phone = document.getElementById('customerPhone').value.trim();
+    var payment = document.getElementById('paymentMethod').value;
+
+    if (!name || !phone || !payment) { showToast('Completa todos los datos'); return; }
+
+    var total = 0;
+    for (var i = 0; i < cart.length; i++) total += cart[i].qty * cart[i].price;
+
+    var message = '🫓 *NUEVO PEDIDO – ORO FRITO*\n\n';
+    message += '👤 *Cliente:* ' + name + '\n';
+    message += '📞 *Teléfono:* ' + phone + '\n';
+    message += '💳 *Pago:* ' + payment + '\n\n';
+    message += '🧾 *Pedido:*\n';
+    for (var k = 0; k < cart.length; k++) {
+      var it = cart[k];
+      message += '• ' + it.qty + 'x ' + it.name + ' — $' + (it.qty * it.price).toFixed(2) + '\n';
+    }
+    message += '\n💰 *Total: $' + total.toFixed(2) + '*\n\n';
+    message += '¡Gracias! 🌟';
+
+    var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+    window.open(url, '_blank');
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeCart();
+  });
+
+  renderCart();
+</script>
+
+</body>
+</html>
+
+
